@@ -29,6 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   void initState() {
     super.initState();
+
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
     emailController = TextEditingController();
@@ -58,10 +59,12 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: const Key('register-form'),
+      key: formKey,
       child: Column(
         children: [
           Padding(
