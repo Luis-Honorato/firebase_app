@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "264763697454",
+    "project_id": "luis-honorato-auth-app",
+    "storage_bucket": "luis-honorato-auth-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264763697454:android:72d63d4a0f74ca42ba72bf",
+        "android_client_info": {
+          "package_name": "com.example.firebase_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264763697454-f28d2clp4kq29p1d7rqhmfd5tu4mhklu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqg37cEdIAW7k6LiMaq_q7TVwgY-6YMU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264763697454-f28d2clp4kq29p1d7rqhmfd5tu4mhklu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "264763697454-ipo06n1479jbr9tiavi94viv9kgck19s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
