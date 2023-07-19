@@ -12,4 +12,13 @@ class FirebaseDataSource {
       password: password,
     );
   }
+
+  User? getCurrentUser() {
+    late final User? userEntity;
+    _firebaseAuth.authStateChanges().listen((User? user) {
+      if (user != null) userEntity = user;
+    });
+
+    return userEntity;
+  }
 }

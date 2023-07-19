@@ -40,6 +40,8 @@ dependencies:
   flutter_multi_formatter: ^2.11.1
   flutter_native_splash: ^2.2.19
   go_router: ^7.0.0
+  logger: ^1.4.0
+  mockito: ^5.4.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -1,4 +1,4 @@
-import 'package:firebase_app/features/authentication/presentation/bloc/cubit/hidde_password_cubit.dart';
+import 'package:firebase_app/features/authentication/presentation/bloc/hide_password_cubit/hidde_password_cubit.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/field.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/login/password_field_suffix_widgets.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/validator/password_validator.dart';
