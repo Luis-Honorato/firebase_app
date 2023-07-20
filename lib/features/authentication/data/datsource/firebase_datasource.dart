@@ -3,7 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  void createUserWithEmailAndPassword({
+  Future<User?> getCurrentUser() async {
+    late final User? userEntity;
+    await _firebaseAuth.authStateChanges().listen((User? user) {
+      if (user != null) {
+        userEntity = user;
+      }
+    });
+
+    return userEntity;
+  }
+
+  Future<void> registerUser({
     required String email,
     required String password,
   }) async {
@@ -13,12 +24,13 @@ class FirebaseDataSource {
     );
   }
 
-  User? getCurrentUser() {
-    late final User? userEntity;
-    _firebaseAuth.authStateChanges().listen((User? user) {
-      if (user != null) userEntity = user;
-    });
-
-    return userEntity;
+  Future<void> signInUser({
+    required String email,
+    required String password,
+  }) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 }

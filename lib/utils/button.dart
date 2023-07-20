@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final void Function()? onTap;
   final String text;
-  const Button({
-    super.key,
-    required this.onTap,
-    required this.text,
-  });
+  final bool isLoading;
+  const Button(
+      {super.key,
+      required this.onTap,
+      required this.text,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +24,17 @@ class Button extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: AppColors.primaryContrastColor,
-              fontSize: 18,
-            ),
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Text(
+                  text,
+                  style: const TextStyle(
+                    color: AppColors.primaryContrastColor,
+                    fontSize: 18,
+                  ),
+                ),
         ),
       ),
     );

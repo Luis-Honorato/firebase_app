@@ -1,9 +1,12 @@
+import 'package:firebase_app/features/authentication/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/email_field.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/password_field.dart';
 import 'package:firebase_app/utils/button.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/enter_with_provider_widget.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/login/register_account_text.dart';
+import 'package:firebase_app/utils/request_status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -13,11 +16,12 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final GlobalKey formKey = GlobalKey();
   late final TextEditingController emailController;
   late final FocusNode emailFocusNode;
   late final TextEditingController passwordController;
   late final FocusNode passwordFocusNode;
+
+  late final AuthBloc authBloc;
 
   @override
   void initState() {
@@ -26,6 +30,8 @@ class _LoginFormState extends State<LoginForm> {
     emailFocusNode = FocusNode();
     passwordController = TextEditingController();
     passwordFocusNode = FocusNode();
+
+    authBloc = context.read<AuthBloc>();
   }
 
   @override
@@ -37,10 +43,12 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Column(
         children: [
           Padding(
@@ -61,7 +69,24 @@ class _LoginFormState extends State<LoginForm> {
               passwordFocusNode: passwordFocusNode,
             ),
           ),
-          Button(onTap: () {}, text: 'Login'),
+          BlocBuilder<AuthBloc, AuthState>(
+            bloc: authBloc,
+            builder: (context, state) {
+              return Button(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    authBloc.add(SignInUserEvent(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    ));
+                  }
+                },
+                text: 'Login',
+                isLoading: state.signInUserStatus != RequestStatus.initial &&
+                    state.signInUserStatus != RequestStatus.success,
+              );
+            },
+          ),
           const SizedBox(height: 20),
           const RegisterAccountText(),
           const SizedBox(height: 20),

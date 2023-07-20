@@ -1,10 +1,13 @@
+import 'package:firebase_app/features/authentication/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/email_field.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/name_field.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/password_field.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/fields/phone_field.dart';
 import 'package:firebase_app/features/authentication/presentation/widgets/register/redirect_to_login_text.dart';
 import 'package:firebase_app/utils/button.dart';
+import 'package:firebase_app/utils/request_status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -59,12 +62,13 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = context.read<AuthBloc>();
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Column(
         children: [
           Padding(
@@ -115,9 +119,26 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-            child: Button(
-              onTap: () {},
-              text: 'Registrar',
+            child: BlocBuilder<AuthBloc, AuthState>(
+              bloc: authBloc,
+              builder: (context, state) {
+                return Button(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      authBloc.add(
+                        RegisterUserEvent(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ),
+                      );
+                    }
+                  },
+                  text: 'Registrar',
+                  isLoading:
+                      state.registerUserStatus != RequestStatus.initial ||
+                          state.registerUserStatus != RequestStatus.success,
+                );
+              },
             ),
           ),
           const RedirectToLoginText(),
