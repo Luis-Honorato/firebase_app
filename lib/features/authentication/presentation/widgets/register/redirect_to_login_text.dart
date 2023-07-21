@@ -8,7 +8,7 @@ class RedirectToLoginText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.go('/'),
+      onTap: () => context.go('/login'),
       child: const Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,

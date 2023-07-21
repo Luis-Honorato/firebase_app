@@ -33,4 +33,8 @@ class FirebaseDataSource {
       password: password,
     );
   }
+
+  Future<void> signOutUser() async {
+    await _firebaseAuth.signOut();
+  }
 }

@@ -13,4 +13,5 @@ abstract class IAuthRepository {
     required String email,
     required String password,
   });
+  Future<Either<Failure, SignOutUserSuccess>> signOutUser();
 }

@@ -7,6 +7,7 @@ import 'package:firebase_app/features/authentication/presentation/widgets/login/
 import 'package:firebase_app/utils/request_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -69,8 +70,13 @@ class _LoginFormState extends State<LoginForm> {
               passwordFocusNode: passwordFocusNode,
             ),
           ),
-          BlocBuilder<AuthBloc, AuthState>(
+          BlocConsumer<AuthBloc, AuthState>(
             bloc: authBloc,
+            listener: (context, state) {
+              if (state.signInUserStatus == RequestStatus.success) {
+                return context.go('/');
+              }
+            },
             builder: (context, state) {
               return Button(
                 onTap: () {

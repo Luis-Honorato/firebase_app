@@ -11,3 +11,7 @@ class RegisterUserFailure extends Failure {
 class SignInUserFailure extends Failure {
   const SignInUserFailure(super.message);
 }
+
+class SignOutUserFailure extends Failure {
+  const SignOutUserFailure(super.message);
+}

@@ -135,7 +135,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   },
                   text: 'Registrar',
                   isLoading:
-                      state.registerUserStatus != RequestStatus.initial ||
+                      state.registerUserStatus != RequestStatus.initial &&
                           state.registerUserStatus != RequestStatus.success,
                 );
               },

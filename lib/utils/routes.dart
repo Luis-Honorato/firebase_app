@@ -11,7 +11,17 @@ final router = GoRouter(
   redirect: (context, state) {
     final userStatus = context.read<AuthBloc>().state.userStatus;
 
-    if (userStatus == UserStatus.unauthenticated) return '/login';
+    if (userStatus == UserStatus.unauthenticated &&
+        state.location != '/login' &&
+        state.location != '/register') {
+      return '/login';
+    }
+
+    if (userStatus == UserStatus.authenticated) {
+      if (state.location == "/login" || state.location == "/") {
+        return "/";
+      }
+    }
 
     return null;
   },

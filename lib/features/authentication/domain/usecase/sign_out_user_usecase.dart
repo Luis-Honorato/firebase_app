@@ -3,18 +3,12 @@ import 'package:firebase_app/features/authentication/data/failures/auth_success.
 import 'package:firebase_app/features/authentication/data/repository/auth_repository.dart';
 import 'package:firebase_app/utils/failure.dart';
 
-class SignInUserUsecase {
+class SignOutUserUsecase {
   final AuthRepository authRepository;
 
-  SignInUserUsecase(this.authRepository);
+  SignOutUserUsecase(this.authRepository);
 
-  Future<Either<Failure, SignInUserSuccess>> call({
-    required String email,
-    required String password,
-  }) async {
-    return await authRepository.signInUser(
-      email: email,
-      password: password,
-    );
+  Future<Either<Failure, SignOutUserSuccess>> call() async {
+    return await authRepository.signOutUser();
   }
 }

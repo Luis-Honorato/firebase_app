@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_app/features/authentication/domain/usecase/register_user_usecase.dart';
 import 'package:firebase_app/features/authentication/domain/usecase/sign_in_user_usecase.dart';
+import 'package:firebase_app/features/authentication/domain/usecase/sign_out_user_usecase.dart';
 import 'package:firebase_app/utils/request_status.dart';
 import 'package:logger/logger.dart';
 import 'package:equatable/equatable.dart';
@@ -22,11 +23,13 @@ final _authLog = Logger(
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetInitialUserUsecase getInitialUserUsecase;
   final RegisterUserUsecase registerUserUsecase;
-  final SinginUserUsecase signInUserUsecase;
+  final SignInUserUsecase signInUserUsecase;
+  final SignOutUserUsecase signOutUserUsecase;
   AuthBloc(
     this.getInitialUserUsecase,
     this.registerUserUsecase,
     this.signInUserUsecase,
+    this.signOutUserUsecase,
   ) : super(const AuthState()) {
     on<GetInitialUserEvent>((event, emit) async {
       final result = await getInitialUserUsecase();
@@ -84,8 +87,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }, (success) {
         emit(state.copyWith(
           signInUserStatus: RequestStatus.success,
+          userStatus: UserStatus.authenticated,
         ));
         _authLog.d('Usuário logado com sucesso');
+      });
+    });
+
+    on<SignOutUserEvent>((event, emit) async {
+      emit(state.copyWith(
+        signOutUserStatus: RequestStatus.loading,
+      ));
+
+      final result = await signOutUserUsecase();
+
+      result.fold((failue) {
+        emit(state.copyWith(signOutUserStatus: RequestStatus.failure));
+        _authLog.e('Não foi possível deslogar o usuário');
+      }, (success) {
+        emit(state.copyWith(
+          signOutUserStatus: RequestStatus.success,
+          userStatus: UserStatus.unauthenticated,
+        ));
+        _authLog.d('Usuário deslogado com sucesso');
       });
     });
   }

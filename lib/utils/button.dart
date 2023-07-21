@@ -5,11 +5,12 @@ class Button extends StatelessWidget {
   final void Function()? onTap;
   final String text;
   final bool isLoading;
-  const Button(
-      {super.key,
-      required this.onTap,
-      required this.text,
-      this.isLoading = false});
+  const Button({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class Button extends StatelessWidget {
         child: Center(
           child: isLoading
               ? const CircularProgressIndicator(
-                  color: Colors.white,
+                  color: AppColors.primaryContrastColor,
                 )
               : Text(
                   text,

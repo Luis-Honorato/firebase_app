@@ -55,4 +55,15 @@ class AuthRepository implements IAuthRepository {
       return const Left(SignInUserFailure(''));
     }
   }
+
+  @override
+  Future<Either<Failure, SignOutUserSuccess>> signOutUser() async {
+    try {
+      await firebaseDataSource.signOutUser();
+
+      return Right(SignOutUserSuccess());
+    } catch (e) {
+      return const Left(SignOutUserFailure(''));
+    }
+  }
 }

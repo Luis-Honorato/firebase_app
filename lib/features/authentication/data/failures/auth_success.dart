@@ -9,3 +9,8 @@ class SignInUserSuccess extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+class SignOutUserSuccess extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
